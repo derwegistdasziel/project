@@ -1,31 +1,47 @@
 version: "3"
 services:
-  node:
-    image: alphonso/docker-express-api
-    container_name: express-api
-    ports:
-      - "8000:8000"
-    networks:
-      - docker-service
-    depends_on:
-      - mariadb
 
   mariadb:
-    image: mariadb:latest
+    image: mariadb/server:10.3
     container_name: docker-mariadb
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
+      MYSQL_HOST: localhost
       MYSQL_ROOT_PASSWORD: "password"
     networks:
       - docker-service
     volumes:
-      - maria-data:/data/db
+      - ./SQL-Database/theater.sql:/docker-entrypoint-initdb.d/sample
 
-networks:
-  docker-service:
-    driver: bridge
+  nodejs:
+    build: ./nodejs
+    container_name: docker-nodejs
+    depends_on: 
+    - mariadb
+    environment:
+      - MYSQL_HOST_IP= mariadb
+    ports:
+      - 8000:8000
+    volumes:
+      - ./nodejs:/app
+    links: 
+     - mariadb
+    command: npm start
+  
+  react-front:
+    build: ./react-front
+    container_name: docker-react-front
+    environment: 
+      <<: *common-variables
+      NODE_PATH: src
+    ports: 
+    - 3000:3000
+    volumes: 
+    - /.react-front/src:/app/src
+    links: 
+    - server
+    command: npm start
 
-volumes:
-  maria-data:
-    driver: local
+
+
