@@ -82,7 +82,7 @@ export function SignUP({ setLogin }) {
     })
       .then((response) => {
         console.log(response.body);
-        if (response.status == 200) setLogin(e);
+        if (response.status == 200) alert("Login");
         else alert(response.status);
       })
       .catch((e) => console.log(e));

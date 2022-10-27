@@ -12,7 +12,7 @@ services:
     networks:
       - docker-service
     volumes:
-      - ./SQL-Database/theater.sql:/docker-entrypoint-initdb.d/sample
+      - ./SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql 
 
   nodejs:
     build: ./nodejs

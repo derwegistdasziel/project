@@ -1,9 +1,13 @@
 var express = require("express");
 var router = express.Router();
+
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+
 /*
 const pool = require("../helpers/database");
 
-router.post("/login", async function (req, res, next) {
+routest("/login", async function (req, res, next) {
   try {
     const { email, password } = req.body;
 
@@ -35,6 +39,7 @@ module.exports = router;
 */
 
 var array = [];
+var init_port = 3306;
 
 // Just to write some common logic related to this router e.g  ../users/* the start means all of the endpoints of the rountr
 router.all("*", function (req, res, next) {
@@ -43,7 +48,7 @@ router.all("*", function (req, res, next) {
 });
 
 //
-router.post("/login", function (req, res, next) {
+router.post("/login", async function (req, res, next) {
   console.log("---------------------login -----------");
   console.log(req.body);
   console.log(array);
@@ -57,13 +62,43 @@ router.post("/login", function (req, res, next) {
     array.find(
       (e) => e.email == req.body.email && e.password == req.body.password
     )
-  )
+  ) {
+    let usr = array.find(
+      (e) => e.email == req.body.email && e.password == req.body.password
+    );
+
+    let respose = await fetch("http://localhost:2375/containers/create", {
+      method: "POST",
+      body: {
+        image: "mariadb/server",
+        container_name: "docker-mariadb",
+        ports: usr.port + ":3306",
+        environment: {
+          MYSQL_HOST: "mariadb",
+          MYSQL_ROOT_PASSWORD: "password",
+        },
+        networks: "docker-service",
+        volumes:
+          "./SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql",
+      },
+    });
+
+    console.log(respose);
+
     res.send("respond with a resource");
-  else res.sendStatus(500);
+  } else res.sendStatus(500);
 });
 
 router.post("/signup", function (req, res, next) {
   console.log(req.body);
+  var usrPort = init_port + 1;
+
+  let usr = {
+    email: req.body.email,
+    password: req.body.password,
+    port: usrPort,
+  };
+
   array.push(req.body);
   res.send("respond with a resource");
 });

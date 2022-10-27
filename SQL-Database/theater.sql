@@ -133,3 +133,4 @@ Insert into THEATER (NAME,SPARTE,ORT) values ('Star Theater','Musiktheater','Ham
 Insert into THEATER (NAME,SPARTE,ORT) values ('Das Deutsche Theater','Schauspielhaus','Berlin');
 Insert into THEATER (NAME,SPARTE,ORT) values ('Schillertheater NRW','Opernhaus','Wuppertal');
 Insert into THEATER (NAME,SPARTE,ORT) values ('Theater Gummersbach','Schauspielhaus','Gummersbach');
+
