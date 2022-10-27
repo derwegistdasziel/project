@@ -66,25 +66,142 @@ router.post("/login", async function (req, res, next) {
     let usr = array.find(
       (e) => e.email == req.body.email && e.password == req.body.password
     );
-
-    let respose = await fetch("http://localhost:2375/containers/create", {
+/*
+    let respose = await fetch('http://localhost:2375/containers/create', {
       method: "POST",
       body: {
-        image: "mariadb/server",
-        container_name: "docker-mariadb",
-        ports: usr.port + ":3306",
-        environment: {
-          MYSQL_HOST: "mariadb",
-          MYSQL_ROOT_PASSWORD: "password",
+        "Image": "mariadb/server",
+        "ExposedPorts": {
+          "3306/tcp": {},
         },
-        networks: "docker-service",
-        volumes:
-          "./SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql",
+        "Env": ["MYSQL_HOST=mariadb", "MYSQL_ROOT_PASSWORD=password"],
+
+        "Volumes": {
+          "/Users/petar/Documents/GitHub/project/SQL-Database/theater.sql":
+            "/docker-entrypoint-initdb.d/theater.sql",
+        },
       },
     });
-
     console.log(respose);
+*/
 
+const data = {"Hostname": "",
+"Domainname": "",
+"User": "",
+"AttachStdin": false,
+"AttachStdout": true,
+"AttachStderr": true,
+"Tty": false,
+"OpenStdin": false,
+"StdinOnce": false,
+"Env": [
+  "MYSQL_HOST=mariadb",
+  "MYSQL_ROOT_PASSWORD=password"
+],
+"Cmd": [
+  "date"
+],
+"Entrypoint": "/docker-entrypoint-initdb.d/theater.sql",
+"Image": "mariadb/server:10.3",
+
+"Volumes": {
+  "/Users/petar/Documents/GitHub/project/SQL-Database/theater.sql": {}
+},
+"WorkingDir": "",
+"NetworkDisabled": false,
+"MacAddress": "12:34:56:78:9a:bc",
+"ExposedPorts": {
+  "3306/tcp": {}
+},
+"StopSignal": "SIGTERM",
+"StopTimeout": 10,
+"HostConfig": {
+  "Binds": [
+    "/tmp:/tmp"
+  ],
+
+  "BlkioWeightDevice": [
+    {}
+  ],
+  "BlkioDeviceReadBps": [
+    {}
+  ],
+  "BlkioDeviceReadIOps": [
+    {}
+  ],
+  "BlkioDeviceWriteBps": [
+    {}
+  ],
+  "BlkioDeviceWriteIOps": [
+    {}
+  ],
+
+  "MemorySwappiness": 60,
+  "OomKillDisable": false,
+  "OomScoreAdj": 500,
+  "PidMode": "",
+  "PidsLimit": 0,
+  "PortBindings": {
+    "3306/tcp": [
+      {
+        "HostPort": "2375"
+      }
+    ]
+  },
+  "PublishAllPorts": false,
+  "Privileged": false,
+  "ReadonlyRootfs": false,
+  "Dns": [
+    "8.8.8.8"
+  ],
+  "DnsOptions": [
+    ""
+  ],
+  "DnsSearch": [
+    ""
+  ],
+
+  "CapAdd": [
+    "NET_ADMIN"
+  ],
+  "CapDrop": [
+    "MKNOD"
+  ],
+  "GroupAdd": [
+    "newgroup"
+  ],
+  "RestartPolicy": {
+    "Name": "",
+    "MaximumRetryCount": 0
+  },
+  "AutoRemove": true,
+  "NetworkMode": "bridge",
+  "Devices": [],
+  "Ulimits": [
+    {}
+  ],
+  "LogConfig": {
+    "Type": "json-file",
+    "Config": {}
+  },
+},};
+
+
+fetch('http://localhost:2375/containers/create', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data)
+    
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Success', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
     res.send("respond with a resource");
   } else res.sendStatus(500);
 });
