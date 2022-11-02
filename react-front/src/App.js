@@ -13,10 +13,12 @@ function App() {
 
 function MainPage() {
   const [login, setLogin] = useState(null);
+  const [user, setUser] = useState(null);
 
   function setLoginInfo(e) {
     console.log(e);
     setLogin(true);
+    setUser(e);
   }
 
   if (!login)
@@ -26,10 +28,10 @@ function MainPage() {
         <SignUP setLogin={setLoginInfo} />
       </div>
     );
-  else return <SQLRepl />;
+  else return <SQLRepl user={user}/>;
 }
 
-function SQLRepl() {
+function SQLRepl({user}) {
   const [sql, setSql] = useState("");
   const [error, setError] = useState(null);
   const [results, setResults] = useState([]);
@@ -40,12 +42,15 @@ function SQLRepl() {
 
   function exec() {
     try {
+      const data = {
+        user: user,
+        sql: sql
+    };
+    console.log(data);
       fetch("http://localhost:3001/execute", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sql: sql,
-        }),
+        headers: { "Content-Type": "application/json" , "user": JSON.stringify(user)},
+        body: JSON.stringify(data),
       })
         .then((response) => {
           return response.json();

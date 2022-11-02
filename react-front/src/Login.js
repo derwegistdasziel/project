@@ -18,9 +18,10 @@ export function SignIn({ setLogin }) {
     })
       .then((response) => {
         console.log(response.status);
-        if (response.status == 200) setLogin(e);
-        else alert(response.status);
+        alert(response.status);
+        return response.json();
       })
+      .then(res => setLogin(res))
       .catch((e) => console.log(e));
   }
   return (
@@ -82,9 +83,10 @@ export function SignUP({ setLogin }) {
     })
       .then((response) => {
         console.log(response.body);
-        if (response.status == 200) alert("Login");
-        else alert(response.status);
+        alert(response.status);
+        return response.json();
       })
+    
       .catch((e) => console.log(e));
   }
 

@@ -1,27 +1,44 @@
+GRANT ALL PRIVILEGES ON *.* TO 'mariadb'@'%' IDENTIFIED BY 'password';
+
+
+CREATE Database theater;
+
+
+use theater;
+
+
+CREATE OR REPLACE TABLE table_name (a int);
+Insert into table_name (a) values (1);
+Insert into table_name (a) values (2);
+
+CREATE OR REPLACE TABLE table_name2 (b int);
+Insert into table_name2 (b) values (3);
+Insert into table_name2 (b) values (4);
+
 --------------------------------------------------------
 --  DDL for Table DICHTER
 --------------------------------------------------------
 
-  CREATE TABLE "DICHTER" 
-   (	"AUTOR" VARCHAR2(20), 
-	"GEBURTSJAHR" DATE, 
-	"GEBURTSORT" VARCHAR2(20)
+  CREATE TABLE DICHTER
+   (	AUTOR VARCHAR2(20), 
+	GEBURTSJAHR DATE, 
+	GEBURTSORT VARCHAR2(20)
    ) ;
 --------------------------------------------------------
 --  DDL for Table DRAMA
 --------------------------------------------------------
 
-  CREATE TABLE "DRAMA" 
-   (	"TITEL" VARCHAR2(20), 
-	"AUTOR" VARCHAR2(20), 
-	"JAHR_URAUFFUEHRUNG" DATE, 
-	"ORT_URAUFFUEHRUNG" VARCHAR2(20)
+  CREATE TABLE DRAMA
+   (	TITEL VARCHAR2(20), 
+	AUTOR VARCHAR2(20), 
+	JAHR_URAUFFUEHRUNG DATE, 
+	ORT_URAUFFUEHRUNG VARCHAR2(20)
    ) ;
 --------------------------------------------------------
 --  DDL for Table ENGAMENT
 --------------------------------------------------------
 
-  CREATE TABLE "ENGAMENT" 
+  CREATE TABLE ENGAMENT
    (	"NAME" VARCHAR2(20), 
 	"SAISON_JAHR" DATE, 
 	"PNR" NUMBER, 
@@ -31,7 +48,7 @@
 --  DDL for Table ROLLE
 --------------------------------------------------------
 
-  CREATE TABLE "ROLLE" 
+  CREATE TABLE ROLLE
    (	"FIGUR" VARCHAR2(20), 
 	"TITEL" VARCHAR2(20), 
 	"AUTOR" VARCHAR2(20), 
@@ -41,7 +58,7 @@
 --  DDL for Table SCHAUSPIELER
 --------------------------------------------------------
 
-  CREATE TABLE "SCHAUSPIELER" 
+  CREATE TABLE SCHAUSPIELER
    (	"PNR" NUMBER, 
 	"WOHNORT" VARCHAR2(20), 
 	"NAME" VARCHAR2(20)
@@ -58,7 +75,7 @@
 --  DDL for Table STELLT_DAR
 --------------------------------------------------------
 
-  CREATE TABLE "STELLT_DAR" 
+  CREATE TABLE STELLT_DAR
    (	"PNR" NUMBER, 
 	"FIGUR" VARCHAR2(20)
    ) ;
@@ -66,7 +83,7 @@
 --  DDL for Table THEATER
 --------------------------------------------------------
 
-  CREATE TABLE "THEATER" 
+  CREATE TABLE THEATER
    (	"NAME" VARCHAR2(20), 
 	"SPARTE" VARCHAR2(20), 
 	"ORT" VARCHAR2(20)

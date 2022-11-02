@@ -39,7 +39,7 @@ module.exports = router;
 */
 
 var array = [];
-var init_port = 3306;
+var init_port = 3500;
 
 // Just to write some common logic related to this router e.g  ../users/* the start means all of the endpoints of the rountr
 router.all("*", function (req, res, next) {
@@ -66,6 +66,8 @@ router.post("/login", async function (req, res, next) {
     let usr = array.find(
       (e) => e.email == req.body.email && e.password == req.body.password
     );
+
+    console.log("user ", usr);
 /*
     let respose = await fetch('http://localhost:2375/containers/create', {
       method: "POST",
@@ -84,8 +86,8 @@ router.post("/login", async function (req, res, next) {
     });
     console.log(respose);
 */
-
-const data = {"Hostname": "",
+/*
+"Hostname": "",
 "Domainname": "",
 "User": "",
 "AttachStdin": false,
@@ -95,14 +97,14 @@ const data = {"Hostname": "",
 "OpenStdin": false,
 "StdinOnce": false,
 "Env": [
-  "MYSQL_HOST=mariadb",
-  "MYSQL_ROOT_PASSWORD=password"
+  "MARIADB_ROOT_USER=localhost",
+  "MARIADB_ROOT_PASSWORD=password"
 ],
 "Cmd": [
   "date"
 ],
 "Entrypoint": "/docker-entrypoint-initdb.d/theater.sql",
-"Image": "mariadb/server:10.3",
+"Image": "mariadb",
 
 "Volumes": {
   "/Users/petar/Documents/GitHub/project/SQL-Database/theater.sql": {}
@@ -135,8 +137,6 @@ const data = {"Hostname": "",
   "BlkioDeviceWriteIOps": [
     {}
   ],
-
-  "MemorySwappiness": 60,
   "OomKillDisable": false,
   "OomScoreAdj": 500,
   "PidMode": "",
@@ -174,6 +174,11 @@ const data = {"Hostname": "",
     "Name": "",
     "MaximumRetryCount": 0
   },
+  "HostConfig": {
+  "Binds": [
+  "/Users/petar/Documents/GitHub/project/nodejs/SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql"
+  ],
+},
   "AutoRemove": true,
   "NetworkMode": "bridge",
   "Devices": [],
@@ -184,7 +189,32 @@ const data = {"Hostname": "",
     "Type": "json-file",
     "Config": {}
   },
-},};
+  },
+*/
+
+const data = {
+"Hostname": "",
+"Env": [
+"MARIADB_ROOT_HOST=mariadb",
+"MARIADB_ROOT_PASSWORD=password"
+],
+"Image": "mariadb:latest",
+
+
+"HostConfig": {
+  "PortBindings": {
+    "3306/tcp": [
+      {
+        "HostPort": usr.port+""
+      }
+    ]
+    },
+  "Binds": [
+  "/Users/petar/Documents/GitHub/project/nodejs/SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql"
+  ],
+  
+}
+};
 
 
 fetch('http://localhost:2375/containers/create', {
@@ -202,21 +232,20 @@ fetch('http://localhost:2375/containers/create', {
   .catch((error) => {
     console.error('Error:', error);
   });
-    res.send("respond with a resource");
+    res.send(usr);
   } else res.sendStatus(500);
 });
 
 router.post("/signup", function (req, res, next) {
   console.log(req.body);
-  var usrPort = init_port + 1;
-
+  usrport = init_port++;
   let usr = {
     email: req.body.email,
     password: req.body.password,
-    port: usrPort,
+    port: usrport,
   };
 
-  array.push(req.body);
-  res.send("respond with a resource");
+  array.push(usr);
+  res.send(usr);
 });
 module.exports = router;

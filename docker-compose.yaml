@@ -1,19 +1,6 @@
 version: "3"
 services:
 
-  mariadb:
-    image: mariadb/server:10.3
-    container_name: docker-mariadb
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_HOST: localhost
-      MYSQL_ROOT_PASSWORD: "password"
-    networks:
-      - docker-service
-    volumes:
-      - ./SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql 
-
   nodejs:
     build: ./nodejs
     container_name: docker-nodejs
@@ -40,7 +27,7 @@ services:
     volumes: 
     - /.react-front/src:/app/src
     links: 
-    - server
+    - docker-nodejs
     command: npm start
 
 
