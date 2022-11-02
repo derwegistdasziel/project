@@ -30,6 +30,8 @@ router.post("/execute", function (req, res, next) {
 
    await conn.execute("use theater;");
 
+   await conn.execute(req.body.sql);
+
    console.log("tablss----")
    tables = await conn.execute("SHOW tables;");
 
@@ -38,7 +40,8 @@ router.post("/execute", function (req, res, next) {
 
   let all_data = [] ;
 
-   let asd = await tables.forEach(async element => {
+   for (const element of tables )
+    {
     console.log("name ---+++ " , element.Tables_in_theater)
 
 
@@ -54,11 +57,10 @@ router.post("/execute", function (req, res, next) {
     console.log(data)
     all_data.push(data);
 
-return
-  });
+
+  }
 
   console.log("all_data")
-  console.log(asd)
   res.send(all_data);
 
 

@@ -57,6 +57,7 @@ function SQLRepl({user}) {
         })
         .then((res) => {
           console.log(res);
+          setResults(res);
         })
         .catch((e) => console.log(e));
 
@@ -70,7 +71,7 @@ function SQLRepl({user}) {
 
   return (
     <div>
-      <h1>React SQL interpreter</h1>
+      <h1>SQL-Trainer TMS-II</h1>
 
       <textarea
         rows="25"
@@ -85,36 +86,35 @@ function SQLRepl({user}) {
       <pre>
         {
           // results contains one object per select statement in the query
-          results.map(({ columns, values }, i) => (
-            <ResultsTable key={i} columns={columns} values={values} />
+          
+          results.map((table , i) => (
+
+            
+            <>
+            <h1>{table.name}</h1>
+            <ResultsTable key={"inde_"+i} td={table} />
+            </>
+            
           ))
+          
         }
       </pre>
     </div>
   );
 }
 
-function ResultsTable({ columns, values }) {
+function ResultsTable({ td }) {
+  console.log(td)
   return (
     <table>
       <thead>
-        <tr>
-          {columns.map((columnName, i) => (
-            <td key={i}>{columnName}</td>
-          ))}
-        </tr>
+  
       </thead>
 
       <tbody>
         {
           // values is an array of arrays representing the results of the query
-          values.map((row, i) => (
-            <tr key={i}>
-              {row.map((value, i) => (
-                <td key={i}>{value}</td>
-              ))}
-            </tr>
-          ))
+          
         }
       </tbody>
     </table>

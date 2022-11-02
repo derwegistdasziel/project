@@ -4,16 +4,10 @@ services:
   nodejs:
     build: ./nodejs
     container_name: docker-nodejs
-    depends_on: 
-    - mariadb
-    environment:
-      - MYSQL_HOST_IP= mariadb
     ports:
       - 8000:8000
     volumes:
       - ./nodejs:/app
-    links: 
-     - mariadb
     command: npm start
   
   react-front:
