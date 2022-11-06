@@ -108,12 +108,12 @@ function ResultsTable({ td }) {
   return (
     <table>
       <thead>
-  
+      
       </thead>
 
       <tbody>
         {
-          // values is an array of arrays representing the results of the query
+          // still need to find a way for the HTTP tables of the queries ---- values is an array of arrays representing the results of the query
           
         }
       </tbody>

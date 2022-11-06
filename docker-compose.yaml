@@ -5,7 +5,7 @@ services:
     build: ./nodejs
     container_name: docker-nodejs
     ports:
-      - 8000:8000
+      - 3001:3001
     volumes:
       - ./nodejs:/app
     command: npm start
@@ -19,7 +19,7 @@ services:
     ports: 
     - 3000:3000
     volumes: 
-    - /.react-front/src:/app/src
+    - ./react-front/src:/app/src
     links: 
     - docker-nodejs
     command: npm start
