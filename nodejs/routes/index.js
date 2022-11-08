@@ -37,46 +37,31 @@ router.post("/execute", function (req, res, next) {
 
   console.log(tables);
 
-
   let all_data = [] ;
 
    for (const element of tables )
     {
     console.log("name ---+++ " , element.Tables_in_theater)
 
-
     let td = await conn.execute(`Select * from ${element.Tables_in_theater};`);
-
 
     let data = {
       name: element.Tables_in_theater,
       td: JSON.stringify( td)
     };
 
-
     console.log(data)
     all_data.push(data);
-
 
   }
 
   console.log("all_data")
   res.send(all_data);
 
-
-
  })
  .catch(e => {console.log(e)
   res.sendStatus(500);}
  )
-
-
-
-
 });
-
-
-
-
 
 module.exports = router;

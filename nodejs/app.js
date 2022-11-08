@@ -23,7 +23,7 @@ app.use(cookieParser()); //
 //this is the cross origin ressource sharing CORS, i installed it as a seperate packager
 app.use(cors());
 
-// register routes here, I have to write in my documentation,
+// register routes here, I have to write in my documentation later,
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 

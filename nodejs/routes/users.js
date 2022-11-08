@@ -40,13 +40,11 @@ module.exports = router;
 
 var array = [];
 var init_port = 3500;
-
 // Just to write some common logic related to this router e.g  ../users/* the start means all of the endpoints of the rountr
 router.all("*", function (req, res, next) {
   console.log("this is users middleware");
   next();
 });
-
 //
 router.post("/login", async function (req, res, next) {
   console.log("---------------------login -----------");
@@ -57,7 +55,6 @@ router.post("/login", async function (req, res, next) {
       (e) => e.email == req.body.email && e.password == req.body.password
     )
   );
-
   if (
     array.find(
       (e) => e.email == req.body.email && e.password == req.body.password
@@ -66,7 +63,6 @@ router.post("/login", async function (req, res, next) {
     let usr = array.find(
       (e) => e.email == req.body.email && e.password == req.body.password
     );
-
     console.log("user ", usr);
 /*
     let respose = await fetch('http://localhost:2375/containers/create', {
@@ -215,7 +211,6 @@ const data = {
   
 }
 };
-
 
 fetch('http://localhost:2375/containers/create', {
   method: 'POST', // or 'PUT'
