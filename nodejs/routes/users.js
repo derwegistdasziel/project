@@ -196,7 +196,6 @@ const data = {
 ],
 "Image": "mariadb:latest",
 
-
 "HostConfig": {
   "PortBindings": {
     "3306/tcp": [
@@ -208,7 +207,7 @@ const data = {
   "Binds": [
   "/Users/petar/Documents/GitHub/project/nodejs/SQL-Database/theater.sql:/docker-entrypoint-initdb.d/theater.sql"
   ],
-  
+
 }
 };
 

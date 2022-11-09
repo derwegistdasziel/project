@@ -13,9 +13,6 @@ services:
   react-front:
     build: ./react-front
     container_name: docker-react-front
-    environment: 
-      <<: *common-variables
-      NODE_PATH: src
     ports: 
     - 3000:3000
     volumes: 
@@ -23,6 +20,7 @@ services:
     links: 
     - docker-nodejs
     command: npm start
+    
 
 
 
